@@ -19,16 +19,7 @@ Vue.use(VueKnobControl)
 
 Most basic usage:
 ```html
-...
 <knob-control v-model="someValue"></knob-control>
-...
-```
-
-:
-
-```html
-...
-...
 ```
 
 
