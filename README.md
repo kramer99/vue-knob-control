@@ -32,7 +32,7 @@ Specifying minimum and maximum values, note that the value arc is drawn from the
   v-model="semitone"
 ></knob-control>
 ```
-<img width="80" alt="three" src="https://user-images.githubusercontent.com/6402557/39788945-c88ae45e-52e1-11e8-98ec-f73600cc505d.png">
+<img width="95" alt="two" src="https://user-images.githubusercontent.com/6402557/39788946-c8b784d2-52e1-11e8-9922-841bb6331d48.png">
 
 Changing size and colors:
 ```html
@@ -46,5 +46,5 @@ Changing size and colors:
   v-model="detune"
 ></knob-control>
 ```
-<img width="95" alt="two" src="https://user-images.githubusercontent.com/6402557/39788946-c8b784d2-52e1-11e8-9922-841bb6331d48.png">
+<img width="80" alt="three" src="https://user-images.githubusercontent.com/6402557/39788945-c88ae45e-52e1-11e8-98ec-f73600cc505d.png">
 
