@@ -1,6 +1,7 @@
 <template>
     <div class="knob-control" :style="{ height: size-5 + 'px' }">
-        <svg :width="size" :height="size" viewBox="0 0 100 100" @click="handleClick">
+        <svg :width="size" :height="size" viewBox="0 0 100 100"
+         @click="onClick" @mousedown="onMouseDown" @mouseup="onMouseUp">
             <path :d="rangePath" :stroke-width="strokeWidth" :stroke="secondaryColor" class="knob-control__range"></path>
             <path :d="valuePath" :stroke-width="strokeWidth" :stroke="primaryColor" class="knob-control__value"></path>
             <text :x="50" :y="57" text-anchor="middle" :fill="textColor" class="knob-control__text-display">{{valueDisplay}}</text>
@@ -111,7 +112,7 @@
             },
         },
         methods: {
-            handleClick (e) {
+            updatePosition (e) {
                 const dx = e.offsetX - this.size / 2;
                 const dy =  this.size / 2 - e.offsetY;
                 const angle = Math.atan2(dy, dx);
@@ -126,16 +127,28 @@
                     this.$emit('input', Math.round(v));
                 }
             },
+            onClick (e) {
+                this.updatePosition(e);
+            },
+            onMouseDown (e) {
+                e.preventDefault();
+                window.addEventListener('mousemove', this.onMouseMove);
+                window.addEventListener('mouseup', this.onMouseUp);
+            },
+            onMouseUp (e) {
+                e.preventDefault();
+                window.removeEventListener('mousemove', this.onMouseMove);
+                window.removeEventListener('mouseup', this.onMouseUp);
+            },
+            onMouseMove (e) {
+                e.preventDefault();
+                this.updatePosition(e);
+            },
         }
     };
 </script>
 
 <style>
-    .knob-control {
-        /*border: 1px;
-        border-color: coral;
-        border-style: solid;*/
-    }
     .knob-control__range {
         fill: none;
         transition: stroke .1s ease-in;
