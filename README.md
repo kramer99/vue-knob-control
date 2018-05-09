@@ -48,3 +48,28 @@ Changing size and colors:
 ```
 <img width="80" alt="three" src="https://user-images.githubusercontent.com/6402557/39788945-c88ae45e-52e1-11e8-98ec-f73600cc505d.png">
 
+You can also pass a function to alter the value text displayed:
+```javascript
+toWord: function(val) {
+    const map = {
+        0: 'zero',
+        1: 'one',
+        2: 'two',
+        3: 'three',
+        4: 'four',
+    }
+    return map[val];
+}
+```
+
+```html
+<knob-control
+  :min="0"
+  :max="4"
+  :value-display-function="toWord"
+  v-model="val"
+></knob-control>
+```
+<img width="107" alt="four" src="https://user-images.githubusercontent.com/6402557/39789354-331a636a-52e4-11e8-9464-6627b3e11add.png">
+
+
