@@ -72,4 +72,19 @@ toWord: function(val) {
 ```
 <img width="107" alt="four" src="https://user-images.githubusercontent.com/6402557/39789354-331a636a-52e4-11e8-9464-6627b3e11add.png">
 
+## Properties
 
+The only required property is `value`.
+
+Option | Type | Description | Default
+-------|------|-------------|--------
+value | Number | Use the `v-model` attribute to set the value of the control | none
+max | Number | Maximum value of the control | 100
+min | Number | Maximum value of the control | 0
+stepSize | Number | Smallest increment the value can change by | 1
+size | Number | Visual size of the control in px | 100
+primaryColor | String | Color of the value arc | #409eff
+secondaryColor | String | Color of the rest of the control | #dcdfe6
+textColor | String | Color of the value text | #000000
+strokeWidth | Number | Thickness of the arcs | 17
+valueDisplayFunction | Function | Custom function to alter the display text | `(v) => v`

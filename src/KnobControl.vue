@@ -38,7 +38,10 @@
                 type: Number,
                 default: 0
             },
-            //'steps': {},
+            'stepSize': {
+                type: Number,
+                default: 1
+            },
             'size': {
                 type: Number,
                 default: 100
@@ -72,7 +75,14 @@
                 return `M ${this.zeroX} ${this.zeroY} A ${RADIUS} ${RADIUS} 0 ${this.largeArc} ${this.sweep} ${this.valueX} ${this.valueY}`;
             },
             zeroRadians () {
-                return mapRange(0, this.min, this.max, MIN_RADIANS, MAX_RADIANS);
+                /* this weird little bit of logic below is to handle the fact that usually we
+                    want the value arc to start drawing from the 'zero' point, but, in the case
+                    that the minimum and maximum values are both above zero, we set the 'zero point'
+                    at the supplied minimum, so the value arc renders as the user would expect */
+                if (this.min > 0 && this.max > 0)
+                    return mapRange(this.min, this.min, this.max, MIN_RADIANS, MAX_RADIANS);
+                else
+                    return mapRange(0, this.min, this.max, MIN_RADIANS, MAX_RADIANS);
             },
             valueRadians () {
                 return mapRange(this.value, this.min, this.max, MIN_RADIANS, MAX_RADIANS);
@@ -116,16 +126,18 @@
                 const dx = e.offsetX - this.size / 2;
                 const dy =  this.size / 2 - e.offsetY;
                 const angle = Math.atan2(dy, dx);
+                let v;
                 /* bit of weird looking logic to map the angles returned by Math.atan2() onto
                     our own unconventional coordinate system */
                 const start = -Math.PI / 2 - Math.PI / 6;
                 if (angle > MAX_RADIANS) {
-                    const v = mapRange(angle, MIN_RADIANS, MAX_RADIANS, this.min, this.max);
-                    this.$emit('input', Math.round(v));
+                    v = mapRange(angle, MIN_RADIANS, MAX_RADIANS, this.min, this.max);
                 } else if (angle < start) {
-                    const v = mapRange(angle + 2 * Math.PI, MIN_RADIANS, MAX_RADIANS, this.min, this.max);
-                    this.$emit('input', Math.round(v));
+                    v = mapRange(angle + 2 * Math.PI, MIN_RADIANS, MAX_RADIANS, this.min, this.max);
+                } else {
+                    return;
                 }
+                this.$emit('input', Math.round((v - this.min) / this.stepSize) * this.stepSize + this.min);
             },
             onClick (e) {
                 this.updatePosition(e);
