@@ -82,6 +82,7 @@ value | Number | Use the `v-model` attribute to set the value of the control | n
 max | Number | Maximum value of the control | 100
 min | Number | Maximum value of the control | 0
 stepSize | Number | Smallest increment the value can change by | 1
+disabled | Boolean | Set to true to disable the knob | false
 size | Number | Visual size of the control in px | 100
 primaryColor | String | Color of the value arc | #409eff
 secondaryColor | String | Color of the rest of the control | #dcdfe6

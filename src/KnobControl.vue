@@ -2,9 +2,28 @@
     <div class="knob-control" :style="{ height: size-5 + 'px' }">
         <svg :width="size" :height="size" viewBox="0 0 100 100"
          @click="onClick" @mousedown="onMouseDown" @mouseup="onMouseUp">
-            <path :d="rangePath" :stroke-width="strokeWidth" :stroke="secondaryColor" class="knob-control__range"></path>
-            <path :d="valuePath" :stroke-width="strokeWidth" :stroke="primaryColor" class="knob-control__value"></path>
-            <text :x="50" :y="57" text-anchor="middle" :fill="textColor" class="knob-control__text-display">{{valueDisplay}}</text>
+            <path
+              :d="rangePath"
+              :stroke-width="strokeWidth"
+              :stroke="secondaryColor"
+              class="knob-control__range">
+            </path>
+            <path 
+              v-if="showValue"
+              :d="valuePath"
+              :stroke-width="strokeWidth"
+              :stroke="primaryColor"
+              class="knob-control__value">
+            </path>
+            <text
+              v-if="showValue"
+              :x="50"
+              :y="57"
+              text-anchor="middle"
+              :fill="textColor"
+              class="knob-control__text-display">
+              {{valueDisplay}}
+            </text>
         </svg>
     </div>
 </template>
@@ -42,6 +61,10 @@
                 type: Number,
                 default: 1
             },
+            'disabled': {
+                type: Boolean,
+                default: false
+            },
             'size': {
                 type: Number,
                 default: 100
@@ -73,6 +96,9 @@
             },
             valuePath () {
                 return `M ${this.zeroX} ${this.zeroY} A ${RADIUS} ${RADIUS} 0 ${this.largeArc} ${this.sweep} ${this.valueX} ${this.valueY}`;
+            },
+            showValue () {
+                return (this.value >= this.min && this.value <= this.max) && !this.disabled;
             },
             zeroRadians () {
                 /* this weird little bit of logic below is to handle the fact that usually we
@@ -140,21 +166,29 @@
                 this.$emit('input', Math.round((v - this.min) / this.stepSize) * this.stepSize + this.min);
             },
             onClick (e) {
-                this.updatePosition(e);
+                if (!this.disabled) {
+                    this.updatePosition(e);
+                }
             },
             onMouseDown (e) {
-                e.preventDefault();
-                window.addEventListener('mousemove', this.onMouseMove);
-                window.addEventListener('mouseup', this.onMouseUp);
+                if (!this.disabled) {
+                    e.preventDefault();
+                    window.addEventListener('mousemove', this.onMouseMove);
+                    window.addEventListener('mouseup', this.onMouseUp);
+                }
             },
             onMouseUp (e) {
-                e.preventDefault();
-                window.removeEventListener('mousemove', this.onMouseMove);
-                window.removeEventListener('mouseup', this.onMouseUp);
+                if (!this.disabled) {
+                    e.preventDefault();
+                    window.removeEventListener('mousemove', this.onMouseMove);
+                    window.removeEventListener('mouseup', this.onMouseUp);
+                }
             },
             onMouseMove (e) {
-                e.preventDefault();
-                this.updatePosition(e);
+                if (!this.disabled) {
+                    e.preventDefault();
+                    this.updatePosition(e);
+                }
             },
         }
     };
