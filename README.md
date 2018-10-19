@@ -10,9 +10,9 @@ npm install vue-knob-control -S
 
 ```javascript
 import Vue from 'vue'
-import VueKnobControl from 'vue-knob-control'
+import KnobControl from 'vue-knob-control'
 
-Vue.use(VueKnobControl)
+Vue.use(KnobControl)
 ```
 
 ## Examples
