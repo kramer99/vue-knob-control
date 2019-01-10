@@ -1,7 +1,11 @@
 <template>
     <div class="knob-control" :style="{ height: size-5 + 'px' }">
         <svg :width="size" :height="size" viewBox="0 0 100 100"
-         @click="onClick" @mousedown="onMouseDown" @mouseup="onMouseUp">
+            @click="onClick"
+            @mousedown="onMouseDown"
+            @mouseup="onMouseUp"
+            @touchstart="onTouchStart"
+            @touchend="onTouchEnd">
             <path
               :d="rangePath"
               :stroke-width="strokeWidth"
@@ -148,9 +152,9 @@
             },
         },
         methods: {
-            updatePosition (e) {
-                const dx = e.offsetX - this.size / 2;
-                const dy =  this.size / 2 - e.offsetY;
+            updatePosition (offsetX, offsetY) {
+                const dx = offsetX - this.size / 2;
+                const dy =  this.size / 2 - offsetY;
                 const angle = Math.atan2(dy, dx);
                 let v;
                 /* bit of weird looking logic to map the angles returned by Math.atan2() onto
@@ -167,7 +171,7 @@
             },
             onClick (e) {
                 if (!this.disabled) {
-                    this.updatePosition(e);
+                    this.updatePosition(e.offsetX, e.offsetY);
                 }
             },
             onMouseDown (e) {
@@ -184,10 +188,33 @@
                     window.removeEventListener('mouseup', this.onMouseUp);
                 }
             },
+            onTouchStart (e) {
+                if (!this.disabled) {
+                    e.preventDefault();
+                    window.addEventListener('touchmove', this.onTouchMove);
+                    window.addEventListener('touchend', this.onTouchEnd);
+                }
+            },
+            onTouchEnd (e) {
+                if (!this.disabled) {
+                    e.preventDefault();
+                    window.removeEventListener('touchmove', this.onTouchMove);
+                    window.removeEventListener('touchend', this.onTouchEnd);
+                }
+            },
             onMouseMove (e) {
                 if (!this.disabled) {
                     e.preventDefault();
-                    this.updatePosition(e);
+                    this.updatePosition(e.offsetX, e.offsetY);
+                }
+            },
+            onTouchMove (e) {
+                if (!this.disabled && e.touches.length == 1) {
+                    const boundingClientRect = this.$el.getBoundingClientRect();
+                    const touch = e.targetTouches.item(0);
+                    const offsetX = touch.clientX - boundingClientRect.left;
+                    const offsetY = touch.clientY - boundingClientRect.top;
+                    this.updatePosition(offsetX, offsetY);
                 }
             },
         }
