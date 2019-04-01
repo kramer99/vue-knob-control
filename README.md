@@ -80,7 +80,7 @@ Option | Type | Description | Default
 -------|------|-------------|--------
 value | Number | Use the `v-model` attribute to set the value of the control | none
 max | Number | Maximum value of the control | 100
-min | Number | Maximum value of the control | 0
+min | Number | Minimum value of the control | 0
 stepSize | Number | Smallest increment the value can change by | 1
 disabled | Boolean | Set to true to disable the knob | false
 size | Number | Visual size of the control in px | 100
