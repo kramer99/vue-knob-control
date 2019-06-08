@@ -1,10 +1,11 @@
 {
   "name": "vue-knob-control",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A rotary knob control for Vue.js",
   "scripts": {
     "build": "vue build --target lib --name vue-knob-control src/KnobControl.vue"
   },
+  "main": "dist/vue-knob-control.umd.js",
   "author": "Craig Henderson",
   "keywords": [
     "vue",
