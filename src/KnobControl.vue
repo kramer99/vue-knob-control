@@ -109,7 +109,7 @@
                 };
             },
             computedSize () {
-                // size check if response and greater than 100 and not absolutely wanted (allowOverSize === true)
+                // size check if responsive is true, greater than 100 and NOT absolutely wanted (allowOverSize === true)
                 if (this.responsive && this.size > 100 && !this.allowOverSize) {
                     return 100 + '%';
                 }
