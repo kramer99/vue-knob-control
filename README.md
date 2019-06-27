@@ -89,4 +89,5 @@ secondaryColor | String | Color of the rest of the control | #dcdfe6
 textColor | String | Color of the value text | #000000
 strokeWidth | Number | Thickness of the arcs | 17
 valueDisplayFunction | Function | Custom function to alter the display text | `(v) => v`
-responsive | Boolean | Use `%` intead of `px` | false
+responsive | Boolean | Use `%` instead of `px` | false
+animation | Object | Animation config | {<br>animated: true,<br>animateValue: true,<br>animationDuration: 2000 (in ms),<br>animationFunction: 'ease-in-out'<br>}

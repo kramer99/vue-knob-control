@@ -17,6 +17,9 @@
               :d="valuePath"
               :stroke-width="strokeWidth"
               :stroke="primaryColor"
+              ref="path-value"
+              :data-dash="length"
+              :style="dashStyle"
               class="knob-control__value">
             </path>
             <text
@@ -46,9 +49,24 @@
 
     export default {
         data () {
-            return {}
+            return {
+                length: 0,
+                animatedValue: 0,
+                interval: null
+            }
         },
         props: {
+            'animation': {
+                type: Object,
+                default: () => {
+                    return {
+                        animated: true,
+                        animateValue: true,
+                        animationDuration: 2000,
+                        animationFunction: 'ease-in-out',
+                    }
+                }
+            },
             'value': {
                 type: Number,
                 required: true
@@ -99,6 +117,12 @@
             },
         },
         computed: {
+            dashStyle () {
+                return {
+                    strokeDasharray: this.length,
+                    strokeDashoffset: this.length
+                }
+            },
             style () {
                 return {
                     height: this.responsive ? this.size + '%' : this.size - 5 + 'px'
@@ -160,7 +184,11 @@
                 return this.valueRadians > this.zeroRadians ? 0 : 1;
             },
             valueDisplay () {
-                return this.valueDisplayFunction(this.value);
+                if (this.animation.animateValue) {
+                    return this.valueDisplayFunction(this.animatedValue);
+                } else {
+                    return this.valueDisplayFunction(this.value);
+                }
             },
         },
         methods: {
@@ -229,16 +257,54 @@
                     this.updatePosition(offsetX, offsetY);
                 }
             },
+            dashLength () {
+                let element = this.$refs[ 'path-value' ]
+                let length = element.getTotalLength()
+
+                if (this.animation.animated) {
+                    element.style.animationDuration = (this.animation.animationDuration / 1000) + 's'
+                    element.style.animationFunction = this.animation.animationFunction
+                }
+
+                element.dataset.dash = length
+
+                this.length = length
+            }
+        },
+        mounted () {
+            this.dashLength() // the element should be in the DOM
+
+            clearInterval(this.interval)
+            this.interval = null;
+
+            if (this.animation.animateValue) {
+                this.interval = setInterval(() => {
+                    if (this.animatedValue < this.value) {
+                        this.animatedValue += 1;
+                    } else {
+                        clearInterval(this.interval);
+                        this.interval = null;
+                    }
+
+                }, ((this.animation.animationDuration * 1000) / this.value) / 1000);
+            }
         }
     };
 </script>
 
 <style>
+    @keyframes dash-frame {
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
     .knob-control__range {
         fill: none;
         transition: stroke .1s ease-in;
     }
     .knob-control__value {
+        animation-name: dash-frame;
+        animation-fill-mode: forwards;
         fill: none;
     }
     .knob-control__text-display {
