@@ -1,6 +1,6 @@
 <template>
-    <div class="knob-control" :style="{ height: size-5 + 'px' }">
-        <svg :width="size" :height="size" viewBox="0 0 100 100"
+    <div class="knob-control" :style="style">
+        <svg :width="computedSize" :height="computedSize" viewBox="0 0 100 100"
             @click="onClick"
             @mousedown="onMouseDown"
             @mouseup="onMouseUp"
@@ -12,7 +12,7 @@
               :stroke="secondaryColor"
               class="knob-control__range">
             </path>
-            <path 
+            <path
               v-if="showValue"
               :d="valuePath"
               :stroke-width="strokeWidth"
@@ -73,6 +73,10 @@
                 type: Number,
                 default: 100
             },
+            'responsive': {
+                type: Boolean,
+                default: false
+            },
             'primaryColor': {
                 type: String,
                 default: '#409eff'
@@ -95,6 +99,14 @@
             },
         },
         computed: {
+            style () {
+                return {
+                    height: this.responsive ? this.size + '%' : this.size - 5 + 'px'
+                };
+            },
+            computedSize () {
+                return this.responsive ? this.size + '%' : this.size;
+            },
             rangePath () {
                 return `M ${this.minX} ${this.minY} A ${RADIUS} ${RADIUS} 0 1 1 ${this.maxX} ${this.maxY}`;
             },
