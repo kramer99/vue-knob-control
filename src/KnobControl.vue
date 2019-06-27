@@ -1,6 +1,6 @@
 <template>
     <div class="knob-control" :style="style">
-        <svg :width="computedSize" :height="computedSize" viewBox="0 0 100 100"
+        <svg :width="computedSize.width" :height="computedSize.height" viewBox="0 0 100 100"
             @click="onClick"
             @mousedown="onMouseDown"
             @mouseup="onMouseUp"
@@ -77,6 +77,10 @@
                 type: Boolean,
                 default: false
             },
+            'allowOverSize': {
+                type: Boolean,
+                default: false
+            },
             'primaryColor': {
                 type: String,
                 default: '#409eff'
@@ -105,7 +109,22 @@
                 };
             },
             computedSize () {
-                return this.responsive ? this.size + '%' : this.size;
+                // size check if response and greater than 100 and not absolutely wanted (allowOverSize === true)
+                if (this.responsive && this.size > 100 && !this.allowOverSize) {
+                    return 100 + '%';
+                }
+
+                if (this.responsive) {
+                    return {
+                        width: this.size + '%',
+                        height: 'auto'
+                    }
+                } else {
+                    return {
+                        width: this.size,
+                        height: this.size
+                    }
+                }
             },
             rangePath () {
                 return `M ${this.minX} ${this.minY} A ${RADIUS} ${RADIUS} 0 1 1 ${this.maxX} ${this.maxY}`;

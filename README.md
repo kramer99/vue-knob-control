@@ -90,3 +90,4 @@ textColor | String | Color of the value text | #000000
 strokeWidth | Number | Thickness of the arcs | 17
 valueDisplayFunction | Function | Custom function to alter the display text | `(v) => v`
 responsive | Boolean | Use `%` intead of `px` | false
+allowOverSize |Boolean | If you want explicitly more than 100% in responsive mode. Else 100% is forced | false
