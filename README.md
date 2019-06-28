@@ -91,3 +91,18 @@ textColor | String | Color of the value text | #000000
 strokeWidth | Number | Thickness of the arcs | 17
 valueDisplayFunction | Function | Custom function to alter the display text | `(v) => v`
 responsive | Boolean | Use `%` instead of `px` | false
+
+
+## Animation:
+
+`animated` true|false <br>
+This will disable/enable knob animation but not value one <br>
+
+`animateValue` true|false <br>
+Same as `animation` expect for the value <br>
+
+`animationDuration` integer, in milliseconds <br>
+set the duration of both animation <br>
+
+`animationFunction` string <br>
+CSS animation function, all CSS animation is available (eg: linear, ease-in, ease-out, ...) <br>
