@@ -60,8 +60,8 @@
                 type: Object,
                 default: () => {
                     return {
-                        animated: true,
-                        animateValue: true,
+                        animated: false,
+                        animateValue: false,
                         animationDuration: 2000,
                         animationFunction: 'ease-in-out',
                     }
