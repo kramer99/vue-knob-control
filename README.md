@@ -79,6 +79,7 @@ The only required property is `value`.
 Option | Type | Description | Default
 -------|------|-------------|--------
 value | Number | Use the `v-model` attribute to set the value of the control | none
+animation | Object | Animation config | {<br>animated: true,<br>animateValue: true,<br>animationDuration: 2000 (in ms),<br>animationFunction: 'ease-in-out'<br>}
 max | Number | Maximum value of the control | 100
 min | Number | Minimum value of the control | 0
 stepSize | Number | Smallest increment the value can change by | 1
@@ -90,4 +91,3 @@ textColor | String | Color of the value text | #000000
 strokeWidth | Number | Thickness of the arcs | 17
 valueDisplayFunction | Function | Custom function to alter the display text | `(v) => v`
 responsive | Boolean | Use `%` instead of `px` | false
-animation | Object | Animation config | {<br>animated: true,<br>animateValue: true,<br>animationDuration: 2000 (in ms),<br>animationFunction: 'ease-in-out'<br>}
