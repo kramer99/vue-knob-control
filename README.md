@@ -72,6 +72,65 @@ toWord: function(val) {
 ```
 <img width="107" alt="four" src="https://user-images.githubusercontent.com/6402557/39789354-331a636a-52e4-11e8-9464-6627b3e11add.png">
 
+## Responsive
+
+> Set the component responsive.
+
+> Size property is always available, be careful if size is more than 100, size is expressed in % in this mode 
+```html
+<knob-control
+    :responsive="true"
+></knob-control>
+```
+
+## Animation:
+> Disabled by default
+
+`animated` true|false <br>
+This will disable/enable knob animation but not value one. <br>
+
+`animateValue` true|false <br>
+Same as `animation` expect for the value. <br>
+
+`animationDuration` integer, in milliseconds <br>
+set the duration of both animation. <br>
+
+`animationFunction` string <br>
+CSS animation function, all CSS animations are available (eg: linear, ease-in, ease-out, ...). <br>
+
+### Examples
+
+> Only animate knob itself
+```html
+<knob-control
+    :animation="{
+        animated: true
+    }"
+></knob-control>
+```
+> Only animate knob value 
+```html
+<knob-control
+    :animation="{
+        animateValue: true
+    }"
+></knob-control>
+```
+_`animated` and `animateValue` can be set at the same time_
+
+> This animation use `CSS linear function` during 5 sec
+```html
+<knob-control
+    :animation="{
+        animated: true,
+        animateValue: true,
+        animationDuration: '5000',
+        animationFunction: 'linear'
+    }"
+></knob-control>
+```
+_`animationDuration` should be expressed in ms (you can use multiplication if you prefer eg: "5 * 1000")_
+
 ## Properties
 
 The only required property is `value`.
@@ -79,7 +138,6 @@ The only required property is `value`.
 Option | Type | Description | Default
 -------|------|-------------|--------
 value | Number | Use the `v-model` attribute to set the value of the control | none
-animation | Object | Animation config | {<br>animated: true,<br>animateValue: true,<br>animationDuration: 2000 (in ms),<br>animationFunction: 'ease-in-out'<br>}
 max | Number | Maximum value of the control | 100
 min | Number | Minimum value of the control | 0
 stepSize | Number | Smallest increment the value can change by | 1
@@ -91,18 +149,9 @@ textColor | String | Color of the value text | #000000
 strokeWidth | Number | Thickness of the arcs | 17
 valueDisplayFunction | Function | Custom function to alter the display text | `(v) => v`
 responsive | Boolean | Use `%` instead of `px` | false
-
-
-## Animation:
-
-`animated` true|false <br>
-This will disable/enable knob animation but not value one <br>
-
-`animateValue` true|false <br>
-Same as `animation` expect for the value <br>
-
-`animationDuration` integer, in milliseconds <br>
-set the duration of both animation <br>
-
-`animationFunction` string <br>
-CSS animation function, all CSS animation is available (eg: linear, ease-in, ease-out, ...) <br>
+animation | Object | Optional animation config object: {
+animated: false,
+animateValue: false,
+animationDuration: 2000 (in ms),
+animationFunction: 'ease-in-out'
+} | null
