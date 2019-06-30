@@ -149,9 +149,4 @@ textColor | String | Color of the value text | #000000
 strokeWidth | Number | Thickness of the arcs | 17
 valueDisplayFunction | Function | Custom function to alter the display text | `(v) => v`
 responsive | Boolean | Use `%` instead of `px` | false
-animation | Object | Optional animation config object: {
-animated: false,
-animateValue: false,
-animationDuration: 2000 (in ms),
-animationFunction: 'ease-in-out'
-} | null
+animation | Object | Optional animation config object: `{ animated: false, animateValue: false, animationDuration: 2000 (in ms), animationFunction: 'ease-in-out' }` | null
