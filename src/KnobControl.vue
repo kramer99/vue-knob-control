@@ -185,15 +185,18 @@
             },
             valueDisplay () {
 
+                //Setting magnitude on base 10 for rounding. (10, 100, 1000) etc.
                 let magnitude = Math.pow(10, this.stepSize.toString().length);
                 var value = 0;
                 if (this.animation.animateValue) {
 
+                    //You multiply the magnitude to set rounding then divide it back to normalize it.
                     value = Math.round(this.animatedValue*magnitude)/magnitude
                     return value;
 
                 } else {
-                   
+                    
+                    //You multiply the magnitude to set rounding then divide it back to normalize 
                     value = Math.round(this.value*magnitude)/magnitude
                     return value;
 
