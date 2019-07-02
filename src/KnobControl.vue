@@ -184,10 +184,19 @@
                 return this.valueRadians > this.zeroRadians ? 0 : 1;
             },
             valueDisplay () {
+
+                let magnitude = Math.pow(10, this.stepSize.toString().length);
+                var value = 0;
                 if (this.animation.animateValue) {
-                    return this.valueDisplayFunction(this.animatedValue);
+
+                    value = Math.round(this.animatedValue*magnitude)/magnitude
+                    return value;
+
                 } else {
-                    return this.valueDisplayFunction(this.value);
+                   
+                    value = Math.round(this.value*magnitude)/magnitude
+                    return value;
+
                 }
             },
         },
