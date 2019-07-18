@@ -185,29 +185,30 @@
             },
             valueDisplay () {
 
-                //Setting magnitude on base 10 for rounding. (10, 100, 1000) etc.
-                let magnitude = Math.pow(10, this.stepSize.toString().length);
-                var value = 0;
                 if (this.animation.animateValue) {
 
-                    //You multiply the magnitude to set rounding then divide it back to normalize it.
-                    value = Math.round(this.animatedValue*magnitude)/magnitude
-                    return value;
+                    return this.animation.animateValue;
 
                 } else {
                     
-                    //You multiply the magnitude to set rounding then divide it back to normalize 
-                    value = Math.round(this.value*magnitude)/magnitude
-                    return value;
+                    return this.value;
 
                 }
             },
         },
         methods: {
             updatePosition (offsetX, offsetY) {
-                const dx = offsetX - this.size / 2;
-                const dy =  this.size / 2 - offsetY;
+
+
+
+                const boundingClientRect = this.$el.getBoundingClientRect();
+
+                //Calculating the positionning from client screen positioning. 
+                //This avoids concflict of dom offsetX position from the event target.
+                const dx = offsetX - (boundingClientRect.left+boundingClientRect.right)/2;
+                const dy =  (boundingClientRect.top+boundingClientRect.bottom)/2 - offsetY;
                 const angle = Math.atan2(dy, dx);
+
                 let v;
                 /* bit of weird looking logic to map the angles returned by Math.atan2() onto
                     our own unconventional coordinate system */
@@ -219,11 +220,30 @@
                 } else {
                     return;
                 }
-                this.$emit('input', Math.round((v - this.min) / this.stepSize) * this.stepSize + this.min);
+
+                let stepChunks = this.stepSize.toString().split();
+
+                let decimalSize = stepChunks[1] != undefined ?  stepChunks[1].length : 0;
+                //let numberSize = stepChunks[0] != undefined ?  stepChunks[0].length : 0;
+
+      
+                //Setting magnitude on base 10 for rounding. (10, 100, 1000) etc.
+                let magnitude = Math.pow(10, decimalSize+1);
+                
+                //console.log(magnitude)   
+                //console.log(v)        
+                //console.trace()
+
+                //You multiply the magnitude to set rounding then divide it back to normalize 
+                let value = Math.round(v*magnitude)/magnitude
+
+                //this.value = value;
+                
+                this.$emit('input', value);
             },
             onClick (e) {
                 if (!this.disabled) {
-                    this.updatePosition(e.offsetX, e.offsetY);
+                    this.updatePosition(e.clientX, e.clientY);
                 }
             },
             onMouseDown (e) {
@@ -257,15 +277,17 @@
             onMouseMove (e) {
                 if (!this.disabled) {
                     e.preventDefault();
-                    this.updatePosition(e.offsetX, e.offsetY);
+                    //console.log('mouse move');
+                    this.updatePosition(e.clientX, e.clientY);
                 }
             },
             onTouchMove (e) {
+
+                //console.log('touch move');
                 if (!this.disabled && e.touches.length == 1) {
-                    const boundingClientRect = this.$el.getBoundingClientRect();
                     const touch = e.targetTouches.item(0);
-                    const offsetX = touch.clientX - boundingClientRect.left;
-                    const offsetY = touch.clientY - boundingClientRect.top;
+                    const offsetX = touch.clientX;
+                    const offsetY = touch.clientY;
                     this.updatePosition(offsetX, offsetY);
                 }
             },
