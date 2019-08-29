@@ -187,11 +187,11 @@
 
                 if (this.animation.animateValue) {
 
-                    return this.animation.animateValue;
+                    return this.valueDisplayFunction(this.animatedValue);
 
                 } else {
                     
-                    return this.value;
+                    return this.valueDisplayFunction(this.value);
 
                 }
             },
