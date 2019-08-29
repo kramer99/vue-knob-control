@@ -221,14 +221,16 @@
                     return;
                 }
 
-                let stepChunks = this.stepSize.toString().split();
+                let stepChunks = this.stepSize.toString().split('.');
+
+                console.log(stepChunks);
 
                 let decimalSize = stepChunks[1] != undefined ?  stepChunks[1].length : 0;
                 //let numberSize = stepChunks[0] != undefined ?  stepChunks[0].length : 0;
 
       
                 //Setting magnitude on base 10 for rounding. (10, 100, 1000) etc.
-                let magnitude = Math.pow(10, decimalSize+1);
+                let magnitude = Math.pow(10, decimalSize);
                 
                 //console.log(magnitude)   
                 //console.log(v)        
