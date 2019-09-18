@@ -9,6 +9,7 @@
             <path
               :d="rangePath"
               :stroke-width="strokeWidth"
+              ref="path-value"
               :stroke="secondaryColor"
               class="knob-control__range">
             </path>
@@ -17,7 +18,7 @@
               :d="valuePath"
               :stroke-width="strokeWidth"
               :stroke="primaryColor"
-              ref="path-value"
+
               :data-dash="length"
               :style="dashStyle"
               class="knob-control__value">
@@ -231,10 +232,7 @@
       
                 //Setting magnitude on base 10 for rounding. (10, 100, 1000) etc.
                 let magnitude = Math.pow(10, decimalSize);
-                
-                //console.log(magnitude)   
-                //console.log(v)        
-                //console.trace()
+
 
                 //You multiply the magnitude to set rounding then divide it back to normalize 
                 let value = Math.round(v*magnitude)/magnitude
@@ -296,6 +294,8 @@
             dashLength () {
                 let element = this.$refs[ 'path-value' ]
                 let length = element.getTotalLength()
+
+                console.log(length)
 
                 if (this.animation.animated) {
                     element.style.animationDuration = (this.animation.animationDuration / 1000) + 's'

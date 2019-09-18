@@ -882,12 +882,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: /usr/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d1b3d832-vue-loader-template"}!/usr/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/usr/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js??ref--0-0!/usr/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib??vue-loader-options!./src/KnobControl.vue?vue&type=template&id=3c36dbce&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"knob-control",style:(_vm.style)},[_c('svg',{attrs:{"width":_vm.computedSize,"height":_vm.computedSize,"viewBox":"0 0 100 100"},on:{"click":_vm.onClick,"mousedown":_vm.onMouseDown,"mouseup":_vm.onMouseUp,"touchstart":_vm.onTouchStart,"touchend":_vm.onTouchEnd}},[_c('path',{staticClass:"knob-control__range",attrs:{"d":_vm.rangePath,"stroke-width":_vm.strokeWidth,"stroke":_vm.secondaryColor}}),(_vm.showValue)?_c('path',{ref:"path-value",staticClass:"knob-control__value",style:(_vm.dashStyle),attrs:{"d":_vm.valuePath,"stroke-width":_vm.strokeWidth,"stroke":_vm.primaryColor,"data-dash":_vm.length}}):_vm._e(),(_vm.showValue)?_c('text',{staticClass:"knob-control__text-display",attrs:{"x":50,"y":57,"text-anchor":"middle","fill":_vm.textColor}},[_vm._v("\n          "+_vm._s(_vm.valueDisplay)+"\n        ")]):_vm._e()])])}
+// CONCATENATED MODULE: /usr/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d1b3d832-vue-loader-template"}!/usr/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/usr/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js??ref--0-0!/usr/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib??vue-loader-options!./src/KnobControl.vue?vue&type=template&id=6af8c9d1&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"knob-control",style:(_vm.style)},[_c('svg',{attrs:{"width":_vm.computedSize,"height":_vm.computedSize,"viewBox":"0 0 100 100"},on:{"click":_vm.onClick,"mousedown":_vm.onMouseDown,"mouseup":_vm.onMouseUp,"touchstart":_vm.onTouchStart,"touchend":_vm.onTouchEnd}},[_c('path',{ref:"path-value",staticClass:"knob-control__range",attrs:{"d":_vm.rangePath,"stroke-width":_vm.strokeWidth,"stroke":_vm.secondaryColor}}),(_vm.showValue)?_c('path',{staticClass:"knob-control__value",style:(_vm.dashStyle),attrs:{"d":_vm.valuePath,"stroke-width":_vm.strokeWidth,"stroke":_vm.primaryColor,"data-dash":_vm.length}}):_vm._e(),(_vm.showValue)?_c('text',{staticClass:"knob-control__text-display",attrs:{"x":50,"y":57,"text-anchor":"middle","fill":_vm.textColor}},[_vm._v("\n          "+_vm._s(_vm.valueDisplay)+"\n        ")]):_vm._e()])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/KnobControl.vue?vue&type=template&id=3c36dbce&
+// CONCATENATED MODULE: ./src/KnobControl.vue?vue&type=template&id=6af8c9d1&
 
 // EXTERNAL MODULE: /usr/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es6.regexp.to-string.js
 var es6_regexp_to_string = __webpack_require__("0c40");
@@ -906,6 +906,7 @@ var es6_number_constructor = __webpack_require__("1b80");
 
 
 
+//
 //
 //
 //
@@ -1123,10 +1124,7 @@ var mapRange = function mapRange(x, inMin, inMax, outMin, outMax) {
       var decimalSize = stepChunks[1] != undefined ? stepChunks[1].length : 0; //let numberSize = stepChunks[0] != undefined ?  stepChunks[0].length : 0;
       //Setting magnitude on base 10 for rounding. (10, 100, 1000) etc.
 
-      var magnitude = Math.pow(10, decimalSize); //console.log(magnitude)   
-      //console.log(v)        
-      //console.trace()
-      //You multiply the magnitude to set rounding then divide it back to normalize 
+      var magnitude = Math.pow(10, decimalSize); //You multiply the magnitude to set rounding then divide it back to normalize 
 
       var value = Math.round(v * magnitude) / magnitude; //this.value = value;
 
@@ -1184,6 +1182,7 @@ var mapRange = function mapRange(x, inMin, inMax, outMin, outMax) {
     dashLength: function dashLength() {
       var element = this.$refs['path-value'];
       var length = element.getTotalLength();
+      console.log(length);
 
       if (this.animation.animated) {
         element.style.animationDuration = this.animation.animationDuration / 1000 + 's';
