@@ -142,6 +142,7 @@ max | Number | Maximum value of the control | 100
 min | Number | Minimum value of the control | 0
 stepSize | Number | Smallest increment the value can change by | 1
 disabled | Boolean | Set to true to disable the knob | false
+readOnly | Boolean | Set to true to disable interaction with the knob while showing its value | false
 size | Number | Visual size of the control in `px` (or `%` if `responsive` is `true`) | 100
 primaryColor | String | Color of the value arc | #409eff
 secondaryColor | String | Color of the rest of the control | #dcdfe6
