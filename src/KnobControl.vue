@@ -87,6 +87,10 @@
                 type: Boolean,
                 default: false
             },
+            'readonly': {
+                type: Boolean,
+                default: false
+            },
             'size': {
                 type: Number,
                 default: 100
@@ -210,46 +214,46 @@
                 this.$emit('input', Math.round((v - this.min) / this.stepSize) * this.stepSize + this.min);
             },
             onClick (e) {
-                if (!this.disabled) {
+                if (!this.disabled && !this.readonly) {
                     this.updatePosition(e.offsetX, e.offsetY);
                 }
             },
             onMouseDown (e) {
-                if (!this.disabled) {
+                if (!this.disabled && !this.readonly) {
                     e.preventDefault();
                     window.addEventListener('mousemove', this.onMouseMove);
                     window.addEventListener('mouseup', this.onMouseUp);
                 }
             },
             onMouseUp (e) {
-                if (!this.disabled) {
+                if (!this.disabled && !this.readonly) {
                     e.preventDefault();
                     window.removeEventListener('mousemove', this.onMouseMove);
                     window.removeEventListener('mouseup', this.onMouseUp);
                 }
             },
             onTouchStart (e) {
-                if (!this.disabled) {
+                if (!this.disabled && !this.readonly) {
                     e.preventDefault();
                     window.addEventListener('touchmove', this.onTouchMove);
                     window.addEventListener('touchend', this.onTouchEnd);
                 }
             },
             onTouchEnd (e) {
-                if (!this.disabled) {
+                if (!this.disabled && !this.readonly) {
                     e.preventDefault();
                     window.removeEventListener('touchmove', this.onTouchMove);
                     window.removeEventListener('touchend', this.onTouchEnd);
                 }
             },
             onMouseMove (e) {
-                if (!this.disabled) {
+                if (!this.disabled && !this.readonly) {
                     e.preventDefault();
                     this.updatePosition(e.offsetX, e.offsetY);
                 }
             },
             onTouchMove (e) {
-                if (!this.disabled && e.touches.length == 1) {
+                if (!this.disabled && this.readonly && e.touches.length == 1) {
                     const boundingClientRect = this.$el.getBoundingClientRect();
                     const touch = e.targetTouches.item(0);
                     const offsetX = touch.clientX - boundingClientRect.left;
